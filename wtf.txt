@@ -1,259 +1,171 @@
-{
-    "message": [
         {
             "programme_name": "test",
             "workouts": [
                 {
-                    "workout_name": "testW"
-                }
-            ]
-        },
-        {
-            "programme_name": "test2",
-            "workouts": [
-                {
-                    "workout_name": "testW2"
-                }
-            ]
-        },
-        {
-            "programme_name": "test2",
-            "workouts": [
-                {
-                    "workout_name": "testW2"
-                }
-            ]
-        },
-        {
-            "programme_name": "test3",
-            "workouts": [
-                {
-                    "workout_name": "testW3"
-                }
-            ]
-        },
-        {
-            "programme_name": "test3",
-            "workouts": [
-                {
-                    "workout_name": "testW3"
-                }
-            ]
-        },
-        {
-            "programme_name": "test3",
-            "workouts": [
-                {
-                    "workout_name": "testW3"
-                }
-            ]
-        },
-        {
-            "programme_name": "test3",
-            "workouts": [
-                {
-                    "workout_name": "testW3"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": []
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": []
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": ""
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": ""
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": ""
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": ""
-                }
-            ]
-        },
-        {
-            "programme_name": "testMULT",
-            "workouts": [
-                {
-                    "workout_name": ""
-                }
-            ]
-        },
-        {
-            "programme_name": "test",
-            "workouts": []
-        },
-        {
-            "programme_name": "test",
-            "workouts": [
-                {
-                    "workout_name": "testW"
-                }
-            ]
-        },
-        {
-            "programme_name": "test",
-            "workouts": [
-                {
-                    "workout_name": "A"
-                }
-            ]
-        },
-        {
-            "programme_name": "test",
-            "workouts": [
-                {
+                    "exercises": [
+                        {
+                            "exercise_name": "squat",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "75.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "80.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "85.00"
+                                }
+                            ]
+                        },
+                        {
+                            "exercise_name": "bench",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "50.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "55.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "60.00"
+                                }
+                            ]
+                        },
+                        {
+                            "exercise_name": "rows",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "60.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "65.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "70.00"
+                                }
+                            ]
+                        }
+                    ],
                     "workout_name": "A"
                 },
                 {
-                    "workout_name": "A"
+                    "exercises": [
+                        {
+                            "exercise_name": "squat",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "75.50"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "80.50"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "85.50"
+                                }
+                            ]
+                        },
+                        {
+                            "exercise_name": "overhead_press",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "30.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "35.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "40.00"
+                                }
+                            ]
+                        },
+                        {
+                            "exercise_name": "deadlift",
+                            "sets": [
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 5,
+                                    "set_order": 1,
+                                    "weight": "90.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 3,
+                                    "set_order": 2,
+                                    "weight": "95.00"
+                                },
+                                {
+                                    "distace": null,
+                                    "duration": null,
+                                    "reps": 1,
+                                    "set_order": 3,
+                                    "weight": "100.00"
+                                }
+                            ]
+                        }
+                    ],
+                    "workout_name": "B"
                 }
             ]
         }
-    ]
-}
