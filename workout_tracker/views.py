@@ -1,11 +1,16 @@
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify
+from sqlalchemy import exc
 
 from . import db
 from .models import Programme, Workout, Exercise, Set
 
 main = Blueprint('main', __name__)
+
+# TODO: add error handlers that actually work
+# Look into adding error handlers into separate file as a blueprint
+# TODO: next try to add user logs
 
 
 def get_programme_workouts(output, programme):
@@ -36,51 +41,57 @@ def get_programme_workouts(output, programme):
 
 @main.route('/api/create_programme', methods=['GET', 'POST'])
 def create_programme():
-    data = request.get_json()
     # TODO: make it a loop?
     # TODO: make it so that faulty data is automatically deleted from db
-
-    # this is an insufficient check
-    for obj in data.values():
-        if obj == "":
-            return jsonify({'message': "error, bitch!"}), 400
-
-    new_programme = Programme(
-        programme_name=data['programme_name'],
-        date_created=datetime.now()
-    )
-    db.session.add(new_programme)
-    db.session.commit()
-
-    for workout_data in data['workouts']:
-        new_workout = Workout(
-            workout_name=workout_data['workout_name'],
-            programme_id=new_programme.id
+    data = request.get_json()
+    try:
+        new_programme = Programme(
+            programme_name=data['programme_name'],
+            date_created=datetime.now()
         )
-        db.session.add(new_workout)
+        db.session.add(new_programme)
         db.session.commit()
 
-        for exercise_data in workout_data['exercises']:
-            new_exercise = Exercise(
-                exercise_name=exercise_data['exercise_name'],
-                workout_id=new_workout.id
+        for workout_data in data['workouts']:
+            new_workout = Workout(
+                workout_name=workout_data['workout_name'],
+                programme_id=new_programme.id
             )
-            db.session.add(new_exercise)
+            db.session.add(new_workout)
             db.session.commit()
 
-            for set_data in exercise_data['sets']:
-                new_set = Set(
-                    order=set_data['set_order'],
-                    reps=set_data['reps'],
-                    weight=set_data['weight'],
-                    duration=set_data['duration'],
-                    distance=set_data['distance'],
-                    exercise_id=new_exercise.id
+            for exercise_data in workout_data['exercises']:
+                new_exercise = Exercise(
+                    exercise_name=exercise_data['exercise_name'],
+                    workout_id=new_workout.id
                 )
-                db.session.add(new_set)
-            db.session.commit()
+                db.session.add(new_exercise)
+                db.session.commit()
 
-    return jsonify({'message': "programme created"})
+                for set_data in exercise_data['sets']:
+                    new_set = Set(
+                        order=set_data['set_order'],
+                        reps=set_data['reps'],
+                        weight=set_data['weight'],
+                        duration=set_data['duration'],
+                        distance=set_data['distance'],
+                        exercise_id=new_exercise.id
+                    )
+                    db.session.add(new_set)
+                db.session.commit()
+        message = f'programme created! id = {new_programme.id}'
+
+    # TODO: find way to handle http exceptions
+    except exc.DataError:
+        db.session.rollback()
+        message = 'dataerror'
+
+    except KeyError:
+        db.session.delete(new_programme)
+        db.session.commit()
+        message = f'inconsistent data! programme_id={new_programme.id} rejected'
+
+    return jsonify({'message': message})
 
 
 @main.route('/api/programmes', methods=['GET'])
@@ -89,9 +100,10 @@ def get_all_programmes():
     output = []
     programmes = Programme.query.all()
     for programme in programmes:
-        workouts = Workout.query.filter_by(programme_id=programme.id).all()
         output.append(
-            {"programme_name": programme.programme_name, "workouts": []})
+            {"programme_name": programme.programme_name,
+             "date_created": programme.date_created,
+             "workouts": []})
         get_programme_workouts(output, programme)
     return jsonify({"message": output})
 

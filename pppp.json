@@ -6,7 +6,6 @@
             "exercises": [
                 {
                     "exercise_name": "squat",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,
@@ -33,7 +32,6 @@
                 },
                 {
                     "exercise_name": "bench",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,
@@ -60,7 +58,6 @@
                 },
                 {
                     "exercise_name": "rows",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,
@@ -92,7 +89,6 @@
             "exercises": [
                 {
                     "exercise_name": "squat",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,
@@ -119,7 +115,6 @@
                 },
                 {
                     "exercise_name": "overhead_press",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,
@@ -146,7 +141,6 @@
                 },
                 {
                     "exercise_name": "deadlift",
-                    "num_sets": 3,
                     "sets": [
                         {
                             "set_order": 1,

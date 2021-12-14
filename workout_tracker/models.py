@@ -1,6 +1,11 @@
 from . import db
-# TODO: this is a prototype that will later be rewritten in django
-# don't overwhelm yourself or spend too much time on it
+
+"""
+this is a prototype that will later be rewritten in django
+don't overwhelm yourself or spend too much time on it
+"""
+# TODO: try making foreign keys nullable so that stuff may be added to db
+# with a single commit
 
 
 class Programme(db.Model):
