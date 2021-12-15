@@ -3,17 +3,30 @@ from datetime import datetime
 from flask import Blueprint, request, jsonify
 from sqlalchemy import exc
 
+from werkzeug.exceptions import BadRequest
+
 from . import db
 from .models import Programme, Workout, Exercise, Set
 
-main = Blueprint('main', __name__)
+"""
+REFACTORING, ADDING BASIC FUNCTIONALITY AND MAKING CODE MORE CONCISE:
+    TODO: refactor routes and make them more compact
+    TODO: put error handlers into separate file
+    TODO: add update_programme feature
+ADD FEATURES
+    TODO: connect to an auth api
+    TODO: add user logs
+    TODO: add auto-increment feature
+LOOK INTOS:
+    TODO: to make less db calls look into rewriting models
+    to optimise queries
+"""
 
-# TODO: add error handlers that actually work
-# Look into adding error handlers into separate file as a blueprint
-# TODO: next try to add user logs
+main = Blueprint('main', __name__)
 
 
 def get_programme_workouts(output, programme):
+    # loops through queried data and makes it json serializable
     workouts = Workout.query.filter_by(programme_id=programme.id).all()
     for workout in workouts:
         exercises = Exercise.query.filter_by(workout_id=workout.id).all()
@@ -41,8 +54,13 @@ def get_programme_workouts(output, programme):
 
 @main.route('/api/create_programme', methods=['GET', 'POST'])
 def create_programme():
+    # loops through incoming json data and inserts objects into a database
     # TODO: make it a loop?
-    # TODO: make it so that faulty data is automatically deleted from db
+    # handles bad requests
+    if BadRequest:
+        message = 'Inconsistant data'
+        return jsonify(message=message)
+
     data = request.get_json()
     try:
         new_programme = Programme(
@@ -81,7 +99,7 @@ def create_programme():
                 db.session.commit()
         message = f'programme created! id = {new_programme.id}'
 
-    # TODO: find way to handle http exceptions
+    # handles sql errors
     except exc.DataError:
         db.session.rollback()
         message = 'dataerror'
@@ -96,7 +114,7 @@ def create_programme():
 
 @main.route('/api/programmes', methods=['GET'])
 def get_all_programmes():
-    # TODO: find a way to make it less shit and optimize
+    # outputs all programmes from db
     output = []
     programmes = Programme.query.all()
     for programme in programmes:
@@ -110,8 +128,7 @@ def get_all_programmes():
 
 @main.route('/api/programmes/<programme_id>', methods=['GET'])
 def get_one_programme(programme_id):
-    # TODO: rewrite this as separate function or some shit,
-    # because it's almost the same as the get all programmes route
+    # outputs a single programme, based on id
     programme = Programme.query.filter_by(id=programme_id).first()
     output = [{"programme_name": programme.programme_name, "workouts": []}]
     get_programme_workouts(output, programme)
@@ -120,8 +137,8 @@ def get_one_programme(programme_id):
 
 @main.route('/api/programmes/<programme_id>/delete', methods=['DELETE'])
 def delete_programme(programme_id):
-    # TODO: look into joining delete and update into one route
+    # deletes all programme objects, inclusing ones from related tables
     programme = Programme.query.filter_by(id=programme_id).first()
     db.session.delete(programme)
     db.session.commit()
-    return jsonify({'message': 'programme has been deleted'})
+    return jsonify({'message': f'programme has {programme.id} been deleted'})
