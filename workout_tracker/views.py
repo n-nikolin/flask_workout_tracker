@@ -55,10 +55,9 @@ def get_programme_workouts(output, programme):
 @main.route('/api/create_programme', methods=['GET', 'POST'])
 def create_programme():
     # loops through incoming json data and inserts objects into a database
-    # TODO: make it a loop?
     # handles bad requests
     if BadRequest:
-        message = 'Inconsistant data'
+        message = 'Inconsistent data'
         return jsonify(message=message)
 
     data = request.get_json()
@@ -87,6 +86,15 @@ def create_programme():
                 db.session.commit()
 
                 for set_data in exercise_data['sets']:
+                    
+                    counter = 0
+                    for i in set_data.items():
+                        if i == None:
+                            counter+=1
+                    if counter >= 3:
+                        # message = 'cannot create empty set'
+                        raise KeyError
+
                     new_set = Set(
                         order=set_data['set_order'],
                         reps=set_data['reps'],
@@ -95,6 +103,7 @@ def create_programme():
                         distance=set_data['distance'],
                         exercise_id=new_exercise.id
                     )
+                    
                     db.session.add(new_set)
                 db.session.commit()
         message = f'programme created! id = {new_programme.id}'
@@ -103,11 +112,13 @@ def create_programme():
     except exc.DataError:
         db.session.rollback()
         message = 'dataerror'
-
-    except KeyError:
-        db.session.delete(new_programme)
-        db.session.commit()
-        message = f'inconsistent data! programme_id={new_programme.id} rejected'
+    
+    # There were a couple of times when this was useful and worked and now it seems useless
+    # Maybe test it out a few times and then delete
+    # except KeyError:
+    #     db.session.delete(new_programme)
+    #     db.session.commit()
+    #     message = f'inconsistent data! programme_id={new_programme.id} rejected'
 
     return jsonify({'message': message})
 
@@ -120,7 +131,6 @@ def get_all_programmes():
     for programme in programmes:
         output.append(
             {"programme_name": programme.programme_name,
-             "date_created": programme.date_created,
              "workouts": []})
         get_programme_workouts(output, programme)
     return jsonify({"message": output})
@@ -130,6 +140,8 @@ def get_all_programmes():
 def get_one_programme(programme_id):
     # outputs a single programme, based on id
     programme = Programme.query.filter_by(id=programme_id).first()
+    if not programme:
+        return jsonify(message=f'programme with id = {programme_id} does not exist')
     output = [{"programme_name": programme.programme_name, "workouts": []}]
     get_programme_workouts(output, programme)
     return jsonify({"message": output[0]})
