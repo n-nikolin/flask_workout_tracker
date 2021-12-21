@@ -12,7 +12,10 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from .views import main
+
+    from .api import main
     app.register_blueprint(main)
+    # from .api.views import main
+    # app.register_blueprint(main)
 
     return app

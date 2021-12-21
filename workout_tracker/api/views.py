@@ -5,8 +5,9 @@ from sqlalchemy import exc
 
 from werkzeug.exceptions import BadRequest
 
-from . import db
-from .models import Programme, Workout, Exercise, Set
+from .. import db
+from ..models import Programme, Workout, Exercise, Set
+from . import main
 
 """
 REFACTORING, ADDING BASIC FUNCTIONALITY AND MAKING CODE MORE CONCISE:
@@ -21,9 +22,6 @@ LOOK INTOS:
     TODO: to make less db calls look into rewriting models
     to optimise queries
 """
-
-main = Blueprint('main', __name__)
-
 
 def get_programme_workouts(output, programme):
     # loops through queried data and makes it json serializable
@@ -51,17 +49,12 @@ def get_programme_workouts(output, programme):
                 })
     return output
 
-
 @main.route('/api/create_programme', methods=['GET', 'POST'])
 def create_programme():
+    # TODO: make set order autoincrement
     # loops through incoming json data and inserts objects into a database
-    # handles bad requests
-    if BadRequest:
-        message = 'Inconsistent data'
-        return jsonify(message=message)
-
-    data = request.get_json()
     try:
+        data = request.get_json()
         new_programme = Programme(
             programme_name=data['programme_name'],
             date_created=datetime.now()
@@ -88,8 +81,9 @@ def create_programme():
                 for set_data in exercise_data['sets']:
                     
                     counter = 0
-                    for i in set_data.items():
+                    for i in set_data.values():
                         if i == None:
+                            print(i)
                             counter+=1
                     if counter >= 3:
                         # message = 'cannot create empty set'
@@ -107,18 +101,21 @@ def create_programme():
                     db.session.add(new_set)
                 db.session.commit()
         message = f'programme created! id = {new_programme.id}'
+    
+    except BadRequest:
+        message = 'bad request'
 
     # handles sql errors
     except exc.DataError:
         db.session.rollback()
         message = 'dataerror'
     
-    # There were a couple of times when this was useful and worked and now it seems useless
-    # Maybe test it out a few times and then delete
-    # except KeyError:
-    #     db.session.delete(new_programme)
-    #     db.session.commit()
-    #     message = f'inconsistent data! programme_id={new_programme.id} rejected'
+    # handles KeyErrors
+    except KeyError:
+        # try doing a rollback
+        db.session.delete(new_programme)
+        db.session.commit()
+        message = f'inconsistent data! programme_id={new_programme.id} rejected'
 
     return jsonify({'message': message})
 
