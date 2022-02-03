@@ -2,8 +2,6 @@
 
 so far we've got a workout programme creator
 
-##TODO
-- add user logs
+## TODO
 - refactor code
 - update models
-- connect it to the auth api
